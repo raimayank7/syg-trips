@@ -1,0 +1,28 @@
+/* trips: checklists, the cost splitter, planners */
+.lead{font-size:1.08rem;color:var(--soft)}
+.btn.sm,.chips a,.chips button{min-height:40px}
+.next{margin-top:26px}
+.grid a small{white-space:normal;text-align:right;max-width:55%}
+.chk{display:flex;gap:10px;align-items:center;min-height:44px;font-weight:400;cursor:pointer}
+.chk input{width:22px;height:22px;flex:none;accent-color:var(--accent)}
+.step{font-size:1.05rem;margin:18px 0 8px}
+.lbl{font-weight:600;font-size:.92rem;margin:12px 0 2px}
+.inline{display:flex;gap:8px}.inline input{flex:1;min-width:0}
+ul.people{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+ul.people li{display:flex;align-items:center;gap:4px;background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:0 4px 0 14px;font-weight:600}
+ul.people .x{width:40px;height:40px;border:0;background:none;color:var(--soft);font-size:1.3rem;cursor:pointer;border-radius:50%}
+.among{display:flex;flex-wrap:wrap;gap:0 18px}
+ul.pay{list-style:none;padding:0;margin:10px 0}
+ul.pay li{background:var(--surface2);border-radius:10px;padding:10px 14px;margin:8px 0;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+ul.pay li span{margin-left:auto;font:600 1.1rem var(--mono)}
+td.num,th.num{text-align:right;white-space:nowrap}
+td.pos{color:var(--ok);font-weight:600}td.neg{color:var(--bad);font-weight:600}
+.brow{display:grid;grid-template-columns:1fr;gap:6px;margin:12px 0;padding-top:10px;border-top:1px solid var(--line)}
+@media (min-width:700px){.brow{grid-template-columns:200px 150px 1fr;align-items:center}.brow label{margin:0}}
+ul.pack{list-style:none;padding:0;margin:6px 0 14px;display:grid;gap:4px 18px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+ul.pack label{display:flex;gap:10px;align-items:flex-start;min-height:40px;padding:6px 0;cursor:pointer}
+ul.pack input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--accent)}
+ul.pack input:checked+span{color:var(--soft);text-decoration:line-through;text-decoration-thickness:1px}
+.plist h3{margin:14px 0 4px}
+.result.plist{border-width:1px}
+@media print{.next,.btn,.hint,.finder,.note{display:none!important}ul.pack{grid-template-columns:1fr 1fr}ul.pack label{min-height:0;padding:2px 0}ul.pack input:checked+span{text-decoration:none;color:#000}.prose h2{break-after:avoid}}
