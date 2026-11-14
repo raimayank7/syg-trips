@@ -1,6 +1,6 @@
-const CACHE = 'syg-trips-cdc110db81', SHELL = ["/assets/site.css?v=1f799d5064", "/assets/site.js?v=be6129bb4a", "/icons/logo-light.webp", "/icons/logo-dark.webp"];
+const CACHE = 'syg-trips-5f0e96f5c0', SHELL = ["/assets/site.css?v=bdcd893b36", "/assets/site.js?v=be6129bb4a", "/icons/logo-light.webp", "/icons/logo-dark.webp"];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {})); });
-self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.indexOf('syg-') === 0 && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));
+self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.indexOf('syg-trips-') === 0 && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {
   const r = e.request, u = new URL(r.url);
   if (r.method !== 'GET' || u.origin !== location.origin) return;

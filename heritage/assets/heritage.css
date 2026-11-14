@@ -1,0 +1,5 @@
+.lead{font-size:1.08rem;color:var(--soft)}
+.grid a small{white-space:normal;text-align:right;max-width:55%}
+dl.facts dd{margin-bottom:6px}
+.small{font-size:.86rem;color:var(--soft)}
+@media print{.btn,.finder,.note,.sponsor-slot{display:none!important}}
