@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://trips.shareyourgroup.com/sitemap.xml
+Sitemap: http://trips.shareyourgroup.com/sitemap.xml

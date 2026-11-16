@@ -1,4 +1,4 @@
-const CACHE = 'syg-m-heritage-5f0e96f5c0', SHELL = ["/heritage/assets/site.css?v=bdcd893b36", "/heritage/assets/site.js?v=be6129bb4a", "/heritage/icons/logo-light.webp", "/heritage/icons/logo-dark.webp"];
+const CACHE = 'syg-m-heritage-5010c6a73a', SHELL = ["/heritage/assets/site.css?v=403176beac", "/heritage/assets/site.js?v=38b96724e9", "/heritage/icons/logo-light.webp", "/heritage/icons/logo-dark.webp"];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {})); });
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.indexOf('syg-m-heritage-') === 0 && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {
