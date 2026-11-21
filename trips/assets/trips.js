@@ -73,7 +73,7 @@
       show(out, '<h2>Total spent: ' + T.rupees(r.total) + '</h2><div class="tbl"><table><thead><tr><th>Person</th><th class="num">Paid</th><th class="num">Share</th><th class="num">Balance</th></tr></thead><tbody>' +
         st.people.map(function (p, i) { var b = r.balance[i]; return '<tr><td>' + S.esc(p) + '</td><td class="num">' + T.rupees(r.paid[i]) + '</td><td class="num">' + T.rupees(r.share[i]) + '</td><td class="num ' + (b > 0 ? 'pos' : b < 0 ? 'neg' : '') + '">' + (b > 0 ? 'gets back ' + T.rupees(b) : b < 0 ? 'owes ' + T.rupees(-b) : 'settled') + '</td></tr>'; }).join('') +
         '</tbody></table></div><h3>Who pays whom</h3>' + (r.pay.length ? '<ul class="pay">' + r.pay.map(function (x) { return '<li><b>' + S.esc(st.people[x.from]) + '</b> pays <b>' + S.esc(st.people[x.to]) + '</b> <span>' + T.rupees(x.amt) + '</span></li>'; }).join('') + '</ul><p class="hint">' + r.pay.length + ' payment' + (r.pay.length > 1 ? 's' : '') + ' settle everything.</p>' : '<p>All settled. Nobody owes anything.</p>') +
-        '<div class="acts"><button class="btn sm" type="button" data-copy="' + S.esc(t) + '">Copy summary</button><button class="btn sm ghost" type="button" data-wa="' + S.esc(t + '\nhttp://trips.shareyourgroup.com/cost-splitter/') + '">Send on WhatsApp</button><button class="btn sm ghost" type="button" data-print>Print</button></div>');
+        '<div class="acts"><button class="btn sm" type="button" data-copy="' + S.esc(t) + '">Copy summary</button><button class="btn sm ghost" type="button" data-wa="' + S.esc(t + '\nhttps://trips.shareyourgroup.com/trips/cost-splitter/') + '">Send on WhatsApp</button><button class="btn sm ghost" type="button" data-print>Print</button></div>');
     }
     function addPerson() {
       pIn.value.split(/[,\n]/).forEach(function (raw) {
@@ -151,7 +151,7 @@
       });
       var title = by[st.type].name + ', ' + st.nights + (st.nights === 1 ? ' night' : ' nights');
       out.innerHTML = '<h2>' + S.esc(title) + '</h2><p class="hint"><span data-count></span>. Ticks stay in this browser.</p>' + h +
-        '<div class="acts"><button class="btn sm" type="button" data-copy="' + S.esc('Packing list: ' + title + '\n\n' + lines.join('\n')) + '">Copy list</button><button class="btn sm ghost" type="button" data-wa="' + S.esc('Packing list: ' + title + '\n\n' + lines.join('\n') + 'http://trips.shareyourgroup.com/packing-list-maker/') + '">Send on WhatsApp</button>' +
+        '<div class="acts"><button class="btn sm" type="button" data-copy="' + S.esc('Packing list: ' + title + '\n\n' + lines.join('\n')) + '">Copy list</button><button class="btn sm ghost" type="button" data-wa="' + S.esc('Packing list: ' + title + '\n\n' + lines.join('\n') + 'https://trips.shareyourgroup.com/trips/packing-list-maker/') + '">Send on WhatsApp</button>' +
         '<button class="btn sm ghost" type="button" id="pk-print">Print</button><button class="btn sm ghost" type="button" id="pk-untick">Clear ticks</button></div>';
       out.hidden = false;
       var key = 'syg-trips-pack-maker-' + st.type; ticks(out, key);
@@ -180,7 +180,7 @@
       var R = function (x) { return T.rupees(Math.round(x * 100)); }, t = 'Trip budget for ' + people + (people > 1 ? ' people' : ' person') + ', ' + days + (days > 1 ? ' days' : ' day') + '\n' + lines.map(function (l) { return l[0] + ': ' + R(l[1]); }).join('\n') + '\nTotal: ' + R(total) + '\nEach person: ' + R(total / people);
       show(out, '<h2>Total: ' + R(total) + '</h2><dl class="facts"><dt>Each person</dt><dd>' + R(total / people) + '</dd><dt>Per day, whole group</dt><dd>' + R(total / days) + '</dd><dt>Per person per day</dt><dd>' + R(total / people / days) + '</dd>' +
         lines.map(function (l) { return '<dt>' + S.esc(l[0]) + '</dt><dd>' + R(l[1]) + ' (' + Math.round(l[1] / total * 100) + '%)</dd>'; }).join('') + '</dl>' +
-        '<div class="acts"><button class="btn sm" type="button" data-copy="' + S.esc(t) + '">Copy budget</button><button class="btn sm ghost" type="button" data-wa="' + S.esc(t + '\nhttp://trips.shareyourgroup.com/trip-budget-planner/') + '">Send on WhatsApp</button></div>');
+        '<div class="acts"><button class="btn sm" type="button" data-copy="' + S.esc(t) + '">Copy budget</button><button class="btn sm ghost" type="button" data-wa="' + S.esc(t + '\nhttps://trips.shareyourgroup.com/trips/trip-budget-planner/') + '">Send on WhatsApp</button></div>');
     }
     d.querySelector('[data-tool=budget]').addEventListener('input', run); d.querySelector('[data-tool=budget]').addEventListener('change', run);
     $('#bg-clear').addEventListener('click', function () { rows.forEach(function (r) { $('input', r).value = ''; }); run(); });
