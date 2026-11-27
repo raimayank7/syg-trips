@@ -1,4 +1,4 @@
-const CACHE = 'syg-m-trips-75c362940e', SHELL = ["/trips/assets/site.css?v=9cff45ef36", "/trips/assets/site.js?v=38b96724e9", "/trips/icons/logo-light.webp", "/trips/icons/logo-dark.webp"];
+const CACHE = 'syg-m-trips-82edbd176f', SHELL = ["/trips/assets/site.css?v=36eb89c45d", "/trips/assets/site.js?v=9977d20129", "/trips/icons/logo-light.webp", "/trips/icons/logo-dark.webp"];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {})); });
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.indexOf('syg-m-trips-') === 0 && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {

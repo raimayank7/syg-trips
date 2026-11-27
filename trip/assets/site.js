@@ -93,6 +93,64 @@
   n.addEventListener('scroll', f, { passive: true }); addEventListener('resize', f); f();
 })();
 
+/* phones (up to 600 px): the section tabs live in a bottom sheet that the menu button opens (phone layout plan P2, 2026-11-26).
+   Pages written before the button existed get one added here, so an older page on a phone still reaches every section. */
+(function () {
+  var d = document, row = d.querySelector('.hd .hd-in'), nav = row && row.querySelector('.nav');
+  if (!nav) return;
+  var links = [].slice.call(nav.querySelectorAll('a'));
+  var btn = row.querySelector('[data-menu-btn]');
+  if (!btn) {
+    if (links.length < 2) return;
+    btn = d.createElement('button');
+    btn.type = 'button'; btn.className = 'ic menu'; btn.setAttribute('data-menu-btn', '');
+    btn.setAttribute('aria-label', 'Sections and pages'); btn.setAttribute('aria-haspopup', 'dialog'); btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+    row.insertBefore(btn, row.querySelector('[data-theme-btn]'));
+  }
+  var dlg = null, esc = function (s) { return window.SYG ? SYG.esc(s) : s; };
+  function build() {
+    dlg = d.createElement('dialog');
+    dlg.className = 'sheet'; dlg.setAttribute('aria-label', 'Sections and pages');
+    var brand = row.querySelector('.brand'), name = (brand && brand.querySelector('i') || {}).textContent || 'Sections';
+    var items = links.map(function (a) {
+      return '<li><a href="' + esc(a.getAttribute('href')) + '"' + (a.hasAttribute('aria-current') ? ' aria-current="page"' : '') + '>' + esc(a.textContent) + '</a></li>';
+    }).join('');
+    /* inside an umbrella (learn, fix ...) a section's own home is not the address's home: offer both */
+    var home = brand && brand.getAttribute('href');
+    if (home && home !== '/') {
+      var h = location.hostname.split('.')[0];
+      items = '<li class="home"><a href="/trip/">' + esc(h.charAt(0).toUpperCase() + h.slice(1)) + ': all sections</a></li>' + items;
+    }
+    dlg.innerHTML = '<div class="sheet-grip" aria-hidden="true"></div><div class="sheet-hd"><b>' + esc(name) + '</b>' +
+      '<button class="ic" type="button" data-sheet-close aria-label="Close"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>' +
+      (links.length > 10 ? '<div class="sheet-find"><input type="search" placeholder="Find a section" aria-label="Find a section" data-sheet-find></div>' : '') +
+      '<ul class="sheet-list">' + items + '</ul><p class="sheet-none" hidden>No section with that name.</p>' +
+      '<nav class="sheet-more" aria-label="More"><a href="https://www.shareyourgroup.com/">ShareYourGroup home</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav>';
+    d.body.appendChild(dlg);
+    dlg.addEventListener('click', function (e) {
+      if (e.target === dlg || e.target.closest('[data-sheet-close]')) dlg.close();
+      else if (e.target.closest('a')) setTimeout(function () { if (dlg.open) dlg.close(); }, 50);
+    });
+    dlg.addEventListener('close', function () { btn.setAttribute('aria-expanded', 'false'); btn.focus(); });
+    var f = dlg.querySelector('[data-sheet-find]');
+    if (f) f.addEventListener('input', function () {
+      var q = f.value.trim().toLowerCase(), n = 0;
+      [].forEach.call(dlg.querySelectorAll('.sheet-list li'), function (li) { var on = !q || li.textContent.toLowerCase().indexOf(q) >= 0; li.hidden = !on; n += on; });
+      dlg.querySelector('.sheet-none').hidden = n > 0;
+    });
+  }
+  btn.addEventListener('click', function () {
+    if (!window.HTMLDialogElement) { nav.style.display = nav.style.display === 'flex' ? '' : 'flex'; return; }   // very old browsers: show the tabs row
+    if (!dlg) build();
+    dlg.showModal(); btn.setAttribute('aria-expanded', 'true');
+    var cur = dlg.querySelector('[aria-current]');
+    if (cur) cur.scrollIntoView({ block: 'nearest' }); else dlg.querySelector('a').focus();
+  });
+  /* a sheet left open while the screen turns wide has nothing to show */
+  addEventListener('resize', function () { if (dlg && dlg.open && innerWidth > 600) dlg.close(); });
+})();
+
 /* AdSense places of every page of the family (the Auto ads script is already in the page frame; these are fixed, labelled places on top of it;
    moved here from ifsc.js on 2026-11-16 so every umbrella and member site gets them).
    Rules (owner): never on the legal pages (body data-ads="0"), never next to a button, a form or the checker's result; a place that
@@ -102,7 +160,7 @@ function sygPlaces() {
   var d = document, main = d.getElementById('main');
   if (!main || d.body.getAttribute('data-ads') === '0' || !d.querySelector('script[src*="adsbygoogle.js"]')) return;
   var CLIENT = 'ca-pub-5935207738848708', UNITS = { display: '2358914532', article: '2020003182', multiplex: '4837738215' };
-  var TOUCHY = 'button,.btn,form,input,select,textarea,canvas,iframe,.acts,[data-ifsc-out],.finder,.az,table,[data-recent],.chips,.grid,.cards,a.sponsor,.tabs';
+  var TOUCHY = 'button,.btn,form,input,select,textarea,canvas,iframe,.acts,[data-ifsc-out],.finder,.az,table,[data-recent],.chips,.grid,.cards,a.sponsor,.tabs,.blist,.bcard';
   function touchy(el) { return !!el && el.nodeType === 1 && (el.matches(TOUCHY) || !!el.querySelector(TOUCHY)); }
   /* what matters is the part of a block that touches the ad: its last piece (block above) or its first piece (block below) */
   function edge(el, last) { if (!el) return false; if (el.matches(TOUCHY)) return true; var c = last ? el.lastElementChild : el.firstElementChild; return touchy(c || el); }

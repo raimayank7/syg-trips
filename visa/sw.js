@@ -1,4 +1,4 @@
-const CACHE = 'syg-m-visa-75c362940e', SHELL = ["/visa/assets/site.css?v=9cff45ef36", "/visa/assets/site.js?v=38b96724e9", "/visa/icons/logo-light.webp", "/visa/icons/logo-dark.webp"];
+const CACHE = 'syg-m-visa-82edbd176f', SHELL = ["/visa/assets/site.css?v=36eb89c45d", "/visa/assets/site.js?v=9977d20129", "/visa/icons/logo-light.webp", "/visa/icons/logo-dark.webp"];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {})); });
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.indexOf('syg-m-visa-') === 0 && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {
